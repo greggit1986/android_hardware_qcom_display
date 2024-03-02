@@ -19,6 +19,7 @@
  */
 
 #include <cutils/properties.h>
+#include <bfqio/bfqio.h>
 #include <utils/Log.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -98,6 +99,9 @@ static void *vsync_loop(void *param)
     if (sched_setscheduler(gettid(), SCHED_FIFO, &sched_param) != 0) {
         ALOGE("Couldn't set SCHED_FIFO for hwc_vsync");
     }
+//jjeditstart
+    android_set_rt_ioprio(0, 1);
+//jjeditend
 
     char vdata[MAX_DATA];
     //Number of physical displays
